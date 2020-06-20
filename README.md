@@ -1,3 +1,13 @@
+Alumno: Raúl Martín Pintos 
+---
+Repositorio: ramapi-1920
+---
+Objetivos del TFM:
+--- 
+ - Mejorar la usabilidad de la herramienta Metta ( ya que en trabajos anteriores se vió que los primeros pasos, como la utilización de esta, requería de una infraestructura compleja)
+ - Facilitar el acceso a los reportes generados por esta. 
+
+
 # Metta 
 
 Metta is an information security preparedness tool.  
@@ -5,7 +15,6 @@ Metta is an information security preparedness tool.
 This project uses Redis/Celery, python, and vagrant with virtualbox to do adversarial simulation.  This allows you to test (mostly) your host based instrumentation but may also allow you to test any network based detection and controls depending on how you set up your vagrants.
 
 The project parses yaml files with actions and uses celery to queue these actions up and run them one at a time without interaction.
-
 
 
 ---
