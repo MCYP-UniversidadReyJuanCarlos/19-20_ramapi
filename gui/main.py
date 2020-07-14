@@ -1,13 +1,12 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
-from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QFileDialog
+from PyQt5 import uic, QtWidgets
 import sys
 import platform
-
+import psutil
 from subprocess import Popen, PIPE
 from shlex import split
 
 from subprocess import check_output
-
 
 
 class MainWindow(QMainWindow):
@@ -17,7 +16,10 @@ class MainWindow(QMainWindow):
 
         #Load the main window
         uic.loadUi("main_gui.ui",self)
+        self.w = []
+        self.setup()
 
+    def setup(self):
         # Initialize the REDIS group box
         redis_version = self.set_redis_version()
         self.version_of_redis_label.setText(redis_version)
@@ -27,6 +29,14 @@ class MainWindow(QMainWindow):
         else:
             self.group_redis.setEnabled(True)
             self.install_redis_button.setEnabled(False)
+
+        #Initialize Redis status
+        if self.get_status_redis() == None:
+            self.status_redis.setText(" Stopped ")
+            self.status_redis.setStyleSheet("background-color: red;")
+        else:
+            self.status_redis.setText(" Running ")
+            self.status_redis.setStyleSheet("background-color: green;")
 
         # List vagrant boxes
         list_machines = self.list_vagrant_machines()
@@ -40,10 +50,11 @@ class MainWindow(QMainWindow):
             for i in range(len(list_machines)):
                 self.combo_vagrant_boxes.addItem(str(list_machines[i]))
 
-        self.status_redis.setStyleSheet("background-color: yellow;")
+        self.open_browse_files_vagrant.clicked.connect(self.search_vagrant_machine)
 
-        # Print the running OS.
+        # TODO - Make the installation of REDIS relative to the OS, in a new pop-up window.
         print(platform.system())
+        self.get_status_redis()
 
 
     def set_redis_version(self):
@@ -61,16 +72,22 @@ class MainWindow(QMainWindow):
         else:
             return str(stdout_formatted)
 
-    #def get_status_redis(self):
+    def get_status_redis(self):
+        process_name = "redis-server"
+        pid = None
+
+        for proc in psutil.process_iter():
+            if process_name in proc.name():
+                pid = proc.pid
+        return pid
 
 
     def get_pid(self,name):
-        return check_output(["pidof", name])
+        return int(check_output())
 
 
 
     # Methods for Vagrant Box
-
     def list_vagrant_machines(self):
         cmd_line_vagrant_box_list = "vagrant box list"
 
@@ -85,6 +102,11 @@ class MainWindow(QMainWindow):
             return []
         else:
             return list_of_machines
+
+    def search_vagrant_machine(self):
+        filename = QFileDialog.getOpenFileName()
+        print(filename)
+        self.lineEdit.setText(filename[0])
 
 
 if __name__ == '__main__':
