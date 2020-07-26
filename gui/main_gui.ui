@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1165</width>
-    <height>655</height>
+    <height>671</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,35 +141,19 @@
        <string>REDIS</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1">
-        <widget class="QLabel" name="version_of_redis_label">
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
+       <item row="3" column="7">
+        <widget class="QPushButton" name="log_redis_button">
          <property name="text">
-          <string/>
+          <string>Logs</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="5">
-        <widget class="QPushButton" name="start_redis_button">
+       <item row="0" column="5">
+        <widget class="QLabel" name="status_redis_title">
          <property name="text">
-          <string>Start</string>
+          <string>Status:</string>
          </property>
         </widget>
-       </item>
-       <item row="1" column="3">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="0" column="6" colspan="2">
         <widget class="QLabel" name="status_redis">
@@ -179,12 +163,8 @@
          <property name="text">
           <string/>
          </property>
-        </widget>
-       </item>
-       <item row="3" column="6">
-        <widget class="QPushButton" name="stop_redis_button">
-         <property name="text">
-          <string>Stop</string>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -204,6 +184,43 @@
          </property>
         </spacer>
        </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="version_of_redis_label">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="6">
+        <widget class="QPushButton" name="stop_redis_button">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="5">
+        <widget class="QPushButton" name="start_redis_button">
+         <property name="text">
+          <string>Start</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="version_of_redis_title">
          <property name="text">
@@ -211,17 +228,46 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="7">
-        <widget class="QPushButton" name="log_redis_button">
+       <item row="1" column="0">
+        <widget class="QLabel" name="redis_machine_lable">
          <property name="text">
-          <string>Logs</string>
+          <string>Machine of Redis:</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="5">
-        <widget class="QLabel" name="status_redis_title">
+       <item row="3" column="0">
+        <widget class="QLabel" name="redis_port_label">
          <property name="text">
-          <string>Status:</string>
+          <string>Redis port:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QTextEdit" name="redis_port">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QTextEdit" name="redis_machine">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
         </widget>
        </item>
@@ -246,45 +292,6 @@
        <string>Celery Agent</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="4">
-        <widget class="QLabel" name="status_redis_2">
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3" colspan="2">
-        <widget class="QPushButton" name="log_redis_button_3">
-         <property name="text">
-          <string>Logs</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="5">
-        <widget class="QFrame" name="celery_log">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>491</width>
-           <height>1666666</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="3">
         <widget class="QLabel" name="status_redis_title_2">
          <property name="text">
@@ -296,13 +303,6 @@
         <widget class="QPushButton" name="stop_redis_button_2">
          <property name="text">
           <string>Stop</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Start Celery Agent</string>
          </property>
         </widget>
        </item>
@@ -321,6 +321,72 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="status_redis_2">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Start Celery Agent</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3" colspan="2">
+        <widget class="QPushButton" name="log_redis_button_3">
+         <property name="text">
+          <string>Logs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QFrame" name="celery_log">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>491</width>
+           <height>1666666</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QPlainTextEdit" name="plainTextEdit_celery_log"/>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
