@@ -9,6 +9,7 @@ import redis_version_mng
 import redis_connect
 import redis_management
 import vagrant_mng
+import celery_mng
 
 class MainWindow(QMainWindow):
 
@@ -18,25 +19,9 @@ class MainWindow(QMainWindow):
         #Load the main window
         uic.loadUi("main_gui.ui",self)
 
-        #self.logCeleryFile = logToFile.LogPipe(logging.INFO, 'celery_log')
-        #self.log = self.logCeleryFile.logging.getLogger('celery_log')
         self.setup()
 
     def setup(self):
-
-        # Setup logger
-        '''
-        self.logTextBox = logger.QTextEditLogger(self.plainTextEdit_celery_log)
-        # log to text box
-        self.logTextBox.widget.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
-
-        self.log = logging.getLogger("main")
-        self.logTextBox.setFormatter(
-            logging.Formatter(
-                '[%(asctime)s %(levelname)s;%(module)s;%(funcName)s] %(message)s'))
-        self.log.addHandler(self.logTextBox)
-        self.log.setLevel(logging.DEBUG)
-        '''
 
         # Initialize the REDIS group box
         redis_version = redis_version_mng.RedisVersion(self.version_of_redis_label)
@@ -54,12 +39,9 @@ class MainWindow(QMainWindow):
         self.redis_hdi = redis_management.ManageRedis(self.stop_redis_button, self.start_redis_button,
                                                       redis_status, redis_handler)
 
-
-
         self.start_redis_button.clicked.connect(self.redis_hdi.start_redis)
         self.stop_redis_button.clicked.connect(self.redis_hdi.stop_redis)
-
-
+        self.log_redis_button.clicked.connect(self.redis_hdi.get_file_log)
         # List vagrant boxes
         self.vagrant_manager = vagrant_mng.VagrantMng(self.combo_vagrant_boxes,self.path_to_vagrantfile,
                                                  self.open_browse_files_vagrant, self.set_up_config_ini)
@@ -83,9 +65,14 @@ class MainWindow(QMainWindow):
         print(platform.system())
         redis_status.get_status_redis()
 
-        # Celery log
-        #self.log.info('celery_log')
+        #Celery Manager
+        self.celery_mng = celery_mng.CeleryManager(self.status_celery,self.celery_start_button,self.celery_stop_button,self.plainTextEdit_celery_log)
+        self.celery_start_button.clicked.connect(self.celery_mng.startCelery)
+        self.celery_stop_button.clicked.connect(self.celery_mng.stopCelery)
+        self.log_celery_button.clicked.connect(self.celery_mng.get_file_log)
 
+        # List tests to execute.
+        self.test_cases_list()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

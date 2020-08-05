@@ -1,15 +1,16 @@
 import subprocess
 import time
-import threading
-from threading import Thread
+import log_file_window
 import sys
 
+from threading import Thread
 from PyQt5 import QtCore
 from loguru import logger
-
 from queue import Queue
 
 ON_POSIX = 'posix' in sys.builtin_module_names
+
+REDIS_LOG_NAME = 'log_redis.log'
 
 class ManageRedis(QtCore.QObject):
     def __init__(self,stop_button,start_button,redis_status,redis_handler):
@@ -19,8 +20,9 @@ class ManageRedis(QtCore.QObject):
         self.status_redis = redis_status
         self.redis_handler = redis_handler
 
-        logger.add("log_redis.log", filter=lambda record: record["extra"]["task"] == "redis")
+        logger.add(REDIS_LOG_NAME, filter=lambda record: record["extra"]["task"] == "redis")
         self.logger_a = logger.bind(task="redis")
+        self.log_windows = log_file_window.SecondWindow()
 
     def enqueue_output(self,out, queue):
         for line in iter(out.readline, b''):
@@ -55,3 +57,7 @@ class ManageRedis(QtCore.QObject):
             time.sleep(1)
             timer += 1
         self.status_redis.set_status_redis(self.stop_button, self.start_button)
+
+    def get_file_log(self):
+        self.log_windows.loadafile(REDIS_LOG_NAME)
+

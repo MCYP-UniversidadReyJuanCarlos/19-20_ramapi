@@ -1,10 +1,9 @@
+import logging
 import os
 import threading
 
-from PyQt5.QtWidgets import QSizePolicy, QLayout, QGridLayout
-
-from PyQt5 import QtWidgets, QtCore
-import logging
+from PyQt5.QtWidgets import QSizePolicy, QGridLayout
+from PyQt5 import QtCore
 
 class QTextEditLogger(logging.Handler, QtCore.QObject,threading.Thread):
     appendPlainText = QtCore.pyqtSignal(str)
