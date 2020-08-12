@@ -1,15 +1,19 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTreeView
 from PyQt5 import uic
 
 import sys
 import platform
+import os
 
+import metta_test_visualizer
 import redis_status_mng
 import redis_version_mng
 import redis_connect
 import redis_management
 import vagrant_mng
 import celery_mng
+import visualize_results
+
 
 class MainWindow(QMainWindow):
 
@@ -18,7 +22,7 @@ class MainWindow(QMainWindow):
 
         #Load the main window
         uic.loadUi("main_gui.ui",self)
-
+        os.chdir('..')
         self.setup()
 
     def setup(self):
@@ -43,23 +47,20 @@ class MainWindow(QMainWindow):
         self.stop_redis_button.clicked.connect(self.redis_hdi.stop_redis)
         self.log_redis_button.clicked.connect(self.redis_hdi.get_file_log)
         # List vagrant boxes
-        self.vagrant_manager = vagrant_mng.VagrantMng(self.combo_vagrant_boxes,self.path_to_vagrantfile,
-                                                 self.open_browse_files_vagrant, self.set_up_config_ini)
+        self.vagrant_manager = vagrant_mng.VagrantMng(self.path_to_vagrantfile,self.open_browse_files_vagrant,
+                                                      self.status_vargrant,self.start_vagrant_button,
+                                                      self.stop_vagrant_button)
         list_machines = self.vagrant_manager.list_vagrant_machines()
-
+        self.log_vagrant_button.clicked.connect(self.vagrant_manager.get_file_log)
         if list_machines == []:
             self.group_vagrant.setEnabled(False)
             self.install_vagrant_button.setEnabled(True)
         else:
             self.group_vagrant.setEnabled(True)
             self.install_vagrant_button.setEnabled(False)
-            for i in range(len(list_machines)):
-                self.combo_vagrant_boxes.addItem(str(list_machines[i]))
 
         self.open_browse_files_vagrant.clicked.connect(self.vagrant_manager.search_vagrant_machine)
 
-        # Setup de file config.ini
-        self.set_up_config_ini.clicked.connect(self.vagrant_manager.setup_configuratio_file)
 
         # TODO - Make the installation of REDIS relative to the OS, in a new pop-up window.
         print(platform.system())
@@ -72,7 +73,14 @@ class MainWindow(QMainWindow):
         self.log_celery_button.clicked.connect(self.celery_mng.get_file_log)
 
         # List tests to execute.
-        self.test_cases_list()
+        self.list_test = metta_test_visualizer.metta_test_visualizer(self.gridLayout_6)
+        #self.test_cases_list.setModel(self.list_test.getModel())i
+        self.test_cases_list = QTreeView()
+        self.test_cases_list.setModel(self.list_test.getModel())
+
+        self.get_results = visualize_results.visualize_results()
+        self.visualize_results_button.clicked.connect(self.get_results.load_results)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

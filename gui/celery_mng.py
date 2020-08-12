@@ -12,7 +12,6 @@ from queue import Queue
 from threading import Thread
 
 
-CELERY_EXECUTOR_SCRIPT = "start_vagrant_celery.sh"
 CELERY_LOG_NAME = "celery_log.log"
 ON_POSIX = 'posix' in sys.builtin_module_names
 
@@ -24,9 +23,9 @@ class CeleryManager(QtCore.QObject):
         self.stopButton = stopButton
         self.status = status
         self.window_logger = window_live_logger.QTextEditLogger(window_logger)
-        self.window_logger.widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        #self.window_logger.widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        os.chdir("..")
+        #os.chdir("..")
         logger.add(CELERY_LOG_NAME, filter=lambda record: record["extra"]["task"] == "celery")
         self.logger_a = logger.bind(task="celery")
 
@@ -34,6 +33,13 @@ class CeleryManager(QtCore.QObject):
 
         self.log_windows = log_file_window.SecondWindow()
 
+        if not (self.is_celery_working()):
+            self.status.setText(" Stoped ")
+            self.status.setStyleSheet("background-color: red")
+            self.startButton.setEnabled(True)
+            self.stopButton.setEnabled(False)
+        else:
+            self.logger_a.warning("Can't stop Celery worker")
 
     def enqueue_output(self, out, queue,mode):
         for line in iter(out.readline, b''):

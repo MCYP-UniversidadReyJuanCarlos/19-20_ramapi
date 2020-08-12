@@ -39,43 +39,102 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
-        <widget class="QLabel" name="vagrant_boxes_label">
-         <property name="text">
-          <string>Vagrant machine:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QComboBox" name="combo_vagrant_boxes"/>
-       </item>
-       <item row="1" column="0" colspan="2">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Path to Vagrantfile:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="path_to_vagrantfile"/>
+       <item row="3" column="4">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
-       <item row="1" column="3">
+       <item row="4" column="1">
+        <widget class="QPushButton" name="stop_vagrant_button">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="5">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>**Select thepath for of Vagrantfile of the machine that will be used</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
         <widget class="QPushButton" name="open_browse_files_vagrant">
          <property name="text">
           <string>Browse</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="3">
-        <widget class="QLabel" name="label_2">
+       <item row="4" column="5">
+        <widget class="QLabel" name="status_vargrant">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
          <property name="text">
-          <string>**Select the machine and the path for its Vagrantfile</string>
+          <string/>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="2" column="3">
-        <widget class="QPushButton" name="set_up_config_ini">
+       <item row="4" column="3">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1" colspan="4">
+        <widget class="QLineEdit" name="path_to_vagrantfile"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="start_vagrant_button">
          <property name="text">
-          <string>SetUp Config</string>
+          <string>Start</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLabel" name="status_vagrant_label">
+         <property name="text">
+          <string>Status:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QPushButton" name="log_vagrant_button">
+         <property name="text">
+          <string>Logs</string>
          </property>
         </widget>
        </item>
@@ -118,14 +177,28 @@
       <property name="title">
        <string>Execution Test</string>
       </property>
-      <widget class="QListWidget" name="test_cases_list">
+      <widget class="QWidget" name="gridLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>531</width>
+         <height>261</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_6"/>
+      </widget>
+      <widget class="QPushButton" name="visualize_results_button">
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>30</y>
-         <width>511</width>
-         <height>181</height>
+         <y>300</y>
+         <width>112</width>
+         <height>32</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>Results</string>
        </property>
       </widget>
      </widget>
@@ -405,7 +478,7 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item row="0" column="0">
+          <item row="0" column="1">
            <widget class="QPlainTextEdit" name="plainTextEdit_celery_log"/>
           </item>
          </layout>

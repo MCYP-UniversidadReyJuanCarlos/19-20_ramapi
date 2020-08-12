@@ -21,9 +21,9 @@ class QTextEditLogger(logging.Handler, QtCore.QObject,threading.Thread):
         self.widget = parent
         self.widget.setReadOnly(True)
 
-        self.widget.setSizePolicy(QSizePolicy.Preferred,QSizePolicy.Preferred)
-        self.widget.setMinimumSize(491,310)
-        self.widget.setMaximumSize(491,160000)
+        #self.widget.setSizePolicy(QSizePolicy.Preferred,QSizePolicy.Preferred)
+        self.widget.setMinimumSize(1891,910)
+        self.widget.setMaximumSize(10091,160000)
         self.widget.verticalScrollBar()
         self.appendPlainText.connect(self.widget.appendPlainText)
         self.start()

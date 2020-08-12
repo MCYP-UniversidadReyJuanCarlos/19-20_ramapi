@@ -1,7 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore
 
-
 class SecondWindow(QtWidgets.QWidget):
 
     def __init__(self):
