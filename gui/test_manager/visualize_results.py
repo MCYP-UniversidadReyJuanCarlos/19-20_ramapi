@@ -15,9 +15,11 @@ class visualize_results(QtWidgets.QWidget):
         self.setWindowTitle('Results')
 
     def load_results(self):
-        path  = os.path.split(os.path.abspath(__file__))[0]+r'/../log.html'
+        path  = os.path.split(os.path.abspath(__file__))[0]+r'/../../ log.html'
         print(path)
         self.view.load(QtCore.QUrl().fromLocalFile(
             path
         ))
         self.show()
+    def set_base_path(self,base_path):
+        os.chdir(base_path)

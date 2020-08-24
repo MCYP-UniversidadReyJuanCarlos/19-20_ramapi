@@ -1,6 +1,7 @@
+import os
 import subprocess
 import time
-import log_file_window
+from logger_manager import log_file_window
 import sys
 
 from threading import Thread
@@ -12,31 +13,34 @@ ON_POSIX = 'posix' in sys.builtin_module_names
 
 REDIS_LOG_NAME = 'log_redis.log'
 
+
 class ManageRedis(QtCore.QObject):
-    def __init__(self,stop_button,start_button,redis_status,redis_handler):
+    def __init__(self, stop_button, start_button, redis_status, redis_handler):
         super(ManageRedis, self).__init__()
+        os.remove(REDIS_LOG_NAME)
         self.stop_button = stop_button
         self.start_button = start_button
         self.status_redis = redis_status
         self.redis_handler = redis_handler
 
-        logger.add(REDIS_LOG_NAME, filter=lambda record: record["extra"]["task"] == "redis")
+        logger.add(REDIS_LOG_NAME, filter=lambda record: record["extra"]["task"] == "redis",
+                   format="{level} | {message}")
         self.logger_a = logger.bind(task="redis")
         self.log_windows = log_file_window.SecondWindow()
 
-    def enqueue_output(self,out, queue):
-        for line in iter(out.readline, b''):
+    def enqueue_output(self, out, queue):
+        for line1 in iter(out.readline, b''):
+            line = str(line1, 'utf-8')
             queue.put(line)
             self.logger_a.info(line)
         out.close()
 
     def start_redis(self):
-        self.logger_a.info("redis")
         cmd_line_redis_starter = "redis-server"
 
-        process = subprocess.Popen([cmd_line_redis_starter],stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+        self.process = subprocess.Popen([cmd_line_redis_starter], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
         q = Queue()
-        t = Thread(target=self.enqueue_output, args=(process.stdout, q))
+        t = Thread(target=self.enqueue_output, args=(self.process.stdout, q))
         t.daemon = True
         t.start()
 
@@ -53,7 +57,7 @@ class ManageRedis(QtCore.QObject):
 
     def check_redis_status(self):
         timer = 0;
-        while (timer < 5 and not(self. redis_handler.redisLocalhostLive())):
+        while (timer < 5 and not (self.redis_handler.redisLocalhostLive())):
             time.sleep(1)
             timer += 1
         self.status_redis.set_status_redis(self.stop_button, self.start_button)
@@ -61,3 +65,5 @@ class ManageRedis(QtCore.QObject):
     def get_file_log(self):
         self.log_windows.loadafile(REDIS_LOG_NAME)
 
+    def set_base_path(self,base_path):
+        os.chdir(base_path)

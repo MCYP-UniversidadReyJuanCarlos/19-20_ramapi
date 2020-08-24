@@ -6,6 +6,7 @@ class SecondWindow(QtWidgets.QWidget):
     def __init__(self):
         super(SecondWindow, self).__init__()
         self.text = QtWidgets.QPlainTextEdit(self)
+        self.text.setMinimumSize(800,800)
         self.text.setReadOnly(True)
         self.init_ui()
 

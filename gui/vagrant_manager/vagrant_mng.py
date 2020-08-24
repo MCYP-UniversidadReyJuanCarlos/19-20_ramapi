@@ -1,21 +1,15 @@
 import os
 import re
 import sys
-import time
-import subprocess
 import vagrant
+from logger_manager import log_file_window
 
-from shlex import split
 from shutil import copyfile
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QFileDialog
-from loguru import logger
 from qtconsole.qt import QtGui
-
-import log_file_window
 
 VAGRANT_LOG_NAME = "vagrant_log.log"
 ON_POSIX = 'posix' in sys.builtin_module_names
@@ -24,15 +18,17 @@ class VagrantMng(QtCore.QObject):
     # Methods for Vagrant Box
     def __init__(self,path,browse,status,start_button,stop_button):
         super(VagrantMng,self).__init__()
+        #os.remove(VAGRANT_LOG_NAME)
         self.path = path
         self.browse_button = browse
         self.status_label = status
         self.start_button = start_button
         self.stop_button = stop_button
+        self.status = False
 
         log_cm = vagrant.make_file_cm(VAGRANT_LOG_NAME)
         self.log_windows = log_file_window.SecondWindow()
-        self.vagrant = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm,quiet_stdout=False)
+        self.vagrant = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm, quiet_stdout=False)
 
         self.get_vagrant_machine_status()
         self.start_button.clicked.connect(self.start_vagrant)
@@ -44,8 +40,6 @@ class VagrantMng(QtCore.QObject):
         if (self.validate_input_vagrantfile()):
             self.setup_configuratio_file()
             self.vagrant.up()
-            print("Arranco")
-            #time.sleep(2)
             self.get_vagrant_machine_status()
         else:
             print("Can't start the Vagrant machine")
@@ -58,7 +52,7 @@ class VagrantMng(QtCore.QObject):
     def validate_input_vagrantfile(self):
         state = self.input_validator.validate(self.path.text(), 0)[0]
         value = False
-        print(state)
+        #print(state)
         if state == QtGui.QValidator.Acceptable:
             color = '#c4df9b'  # green
             value = True
@@ -68,17 +62,15 @@ class VagrantMng(QtCore.QObject):
             color = '#f6989d'  # red
         self.path.setStyleSheet('QLineEdit { background-color: %s }' % color)
         return value
-    #TODO metodo de stop_vagrant  --> undo de config, parada y actualice el estado.
+
     def stop_vagrant(self):
         self.vagrant.halt()
         print("Lanzada signal de parada")
         self.get_vagrant_machine_status()
         self.restore_configuration_file()
 
-    #TODO add logger to vagrant thread -> see Firefox marker.
-
     def list_vagrant_machines(self):
-        print(self.vagrant.box_list())
+        #print(self.vagrant.box_list())
         return self.vagrant.box_list()
 
     def search_vagrant_machine(self):
@@ -89,7 +81,6 @@ class VagrantMng(QtCore.QObject):
     def setup_configuratio_file(self):
         vagrantfile_path = str(self.path.text())
         dir_of_vagrant_file = os.path.dirname(vagrantfile_path)
-        print('Raulll' + dir_of_vagrant_file)
 
         vagrant_name = self.vagrant.status()[0].name
 
@@ -100,7 +91,6 @@ class VagrantMng(QtCore.QObject):
 
         for line in fichero_entrada:
             # read replace the string and write to output file
-
             line = re.sub(r"windows=[a-z]*", "windows="+vagrant_name, line)
             line = re.sub(r"linux=[a-z]*", "linux="+vagrant_name, line)
             line = re.sub(r"osx=[a-z]*", "osx="+vagrant_name, line)
@@ -119,15 +109,16 @@ class VagrantMng(QtCore.QObject):
     def get_vagrant_machine_status(self):
         print("Getting status")
         status = self.vagrant.status()
-        print(type(self.vagrant.status()[0]))
+        #print(type(self.vagrant.status()[0]))
 
         if "poweroff" == status[0].state:
+            self.status = False
             self.stop_button.setEnabled(False)
             self.start_button.setEnabled(True)
             self.status_label.setText(" Stopped ")
             self.status_label.setStyleSheet("background-color: red;")
-
         else:
+            self.status = True
             self.stop_button.setEnabled(True)
             self.start_button.setEnabled(False)
             self.status_label.setText(" Running ")
