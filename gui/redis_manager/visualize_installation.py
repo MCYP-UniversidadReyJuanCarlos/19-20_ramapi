@@ -2,10 +2,10 @@ import os
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5 import QtWebEngineWidgets
-class visualize_installation(QtWidgets.QWidget):
+class VisualizeInstallation(QtWidgets.QWidget):
 
     def __init__(self):
-        super(visualize_installation, self).__init__()
+        super(VisualizeInstallation, self).__init__()
         self.view = QtWebEngineWidgets.QWebEngineView()
         self.init_ui()
 

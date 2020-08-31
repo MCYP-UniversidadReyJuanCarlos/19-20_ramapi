@@ -3,20 +3,11 @@ import psutil
 from PyQt5 import QtCore
 
 
-class statusRedis(QtCore.QObject):
+class StatusRedis(QtCore.QObject):
     def __init__(self,parent, redis_handler):
         super().__init__()
         self.widget = parent
         self.redis_handler = redis_handler
-
-    def get_status_redis(self):
-        process_name = "redis-server"
-        pid = None
-
-        for proc in psutil.process_iter():
-            if process_name in proc.name():
-                pid = proc.pid
-        return pid
 
     def set_status_redis(self,button_redis_stop,button_redis_start):
         if (not self.redis_handler.redisLocalhostLive()):

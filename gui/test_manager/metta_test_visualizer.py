@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QFileSystemModel, QTreeView
 from qtconsole.qt import QtCore
 from test_manager import run_test
 
-class metta_test_visualizer(QtCore.QObject):
+class MettaTestVisualizer(QtCore.QObject):
 
     def __init__(self, group_box_test, test_runner):
         super().__init__()
@@ -32,20 +32,14 @@ class metta_test_visualizer(QtCore.QObject):
         self.tree.setColumnWidth(0, 400)
 
         self.box.addWidget(self.tree)
-        #self.setModel(self.model)
-        #QtCore.QObject.connect(self.tree, QtCore.SIGNAL('clicked()'), self.test)
         self.tree.clicked.connect(self.get_test_name)
 
     def get_test_name(self, index):
         indexItem = self.tree.model.index(index.row(), 0, index.parent())
 
-        # full path/filename selected
         filePath = self.tree.model.filePath(indexItem)
 
-        print(filePath)
         run_test.run_test.test_selected(self.test_runner,filePath)
-
-
         self.complete_file_path = filePath
 
     def getModel(self):

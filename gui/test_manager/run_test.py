@@ -6,20 +6,21 @@ from logger_manager import log_file_window
 from loguru import logger
 from PyQt5 import QtCore
 
-from test_manager.asinc_test_runner import asinc_test_runner
+from test_manager.asinc_test_runner import AsincTestRunner
 
 TEST_RUNNER_LOG = 'test_runner_log.log'
 ON_POSIX = 'posix' in sys.builtin_module_names
 
 
-class run_test(QtCore.QObject):
+class RunTest(QtCore.QObject):
+
     def __init__(self, startButton, statusLabel,celery_instance,redis_instance,vagrant_instance):
         try:
             os.remove(TEST_RUNNER_LOG)
         except:
             print("There is no log file")
 
-        super(run_test, self).__init__()
+        super(RunTest, self).__init__()
         self.setup()
         self.startButton = startButton
         self.base_path = None
@@ -43,7 +44,7 @@ class run_test(QtCore.QObject):
     def start_test(self):
         cmd_test_runner = "python run_simulation_yaml.py -f " + str(
             self.path_of_the_test)  # Needs the MITRE/XXXXXX/test_XXXX_XXXX.yml
-        self.command_runner = asinc_test_runner(cmd_test_runner, self.startButton, self.status)
+        self.command_runner = AsincTestRunner(cmd_test_runner, self.startButton, self.status)
         if (not self.is_test_running()):
             self.command_runner.start()
         else:
@@ -52,13 +53,13 @@ class run_test(QtCore.QObject):
 
     def test_selected(self, file_path):
 
-        if not (re.match(r"[A-z\/0-9-]*\.yml", str(file_path))):
+        if not (re.match(r"[A-z/0-9-]*\.yml", str(file_path))):
             self.startButton.setEnabled(False)
         else:
             self.path_of_the_test = file_path
             if (not self.is_test_running() and self.redis.redis_handler.redisLocalhostLive()
                     and self.celery.is_celery_working() and self.vagrant.status):
-                self.status.setText(" Stoped ")
+                self.status.setText(" Stopped ")
                 self.status.setStyleSheet("background-color: red")
                 self.startButton.setEnabled(True)
             else:

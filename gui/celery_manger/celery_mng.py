@@ -33,7 +33,7 @@ class CeleryManager(QtCore.QObject):
         self.logger_a = logger.bind(task="celery")
         self.log_windows = log_file_window.SecondWindow()
         if not (self.is_celery_working()):
-            self.status.setText(" Stoped ")
+            self.status.setText(" Stopped ")
             self.status.setStyleSheet("background-color: red")
             self.startButton.setEnabled(True)
             self.stopButton.setEnabled(False)
@@ -46,13 +46,13 @@ class CeleryManager(QtCore.QObject):
             queue.put(line)
             if "info" == mode:
                 self.logger_a.info(line)
-                self.window_logger.emit(line)
+                self.window_logger.emit(line1)
             if "error" == mode:
                 self.logger_a.error(line)
-                self.window_logger.emit(line)
+                self.window_logger.emit(line1)
             else:
                 self.logger_a.warning(line)
-                self.window_logger.emit(line)
+                self.window_logger.emit(line1)
         out.close()
 
     def startCelery(self):
@@ -90,7 +90,7 @@ class CeleryManager(QtCore.QObject):
             is_working = self.is_celery_working()
             #print(is_working)
             if not (is_working):
-                self.status.setText(" Stoped ")
+                self.status.setText(" Stopped ")
                 self.process.kill()
                 self.status.setStyleSheet("background-color: red")
                 self.startButton.setEnabled(True)

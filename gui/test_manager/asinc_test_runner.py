@@ -8,7 +8,7 @@ from loguru import logger
 TEST_RUNNER_LOG = 'test_runner_log.log'
 ON_POSIX = 'posix' in sys.builtin_module_names
 
-class asinc_test_runner(threading.Thread):
+class AsincTestRunner(threading.Thread):
 
     def __init__(self, cmd, start_button, status_label):
         threading.Thread.__init__(self)

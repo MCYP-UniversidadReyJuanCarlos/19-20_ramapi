@@ -2,7 +2,7 @@ import os
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5 import QtWebEngineWidgets
-class visualize_results(QtWidgets.QWidget):
+class VisualizeResults(QtWidgets.QWidget):
 
     def __init__(self):
         super(visualize_results,self).__init__()
