@@ -40,7 +40,7 @@ class MainWindow(QMainWindow):
         redis_status.set_status_redis(self.stop_redis_button,self.start_redis_button)
 
         self.redis_hdi = redis_management.ManageRedis(self.stop_redis_button, self.start_redis_button,
-                                                      redis_status, redis_handler)
+                                                      redis_status, redis_handler, self.redis_port)
         self.redis_hdi.set_base_path(self.base_path)
         self.start_redis_button.clicked.connect(self.redis_hdi.start_redis)
         self.stop_redis_button.clicked.connect(self.redis_hdi.stop_redis)
@@ -77,7 +77,8 @@ class MainWindow(QMainWindow):
 
         #Celery Manager
         self.celery_mng = celery_mng.CeleryManager(self.status_celery, self.celery_start_button,
-                                                   self.celery_stop_button, self.plainTextEdit_celery_log)
+                                                   self.celery_stop_button, self.plainTextEdit_celery_log,
+                                                   self.redis_port)
         self.celery_mng.setup()
         self.celery_start_button.clicked.connect(self.celery_mng.startCelery)
         self.celery_stop_button.clicked.connect(self.celery_mng.stopCelery)

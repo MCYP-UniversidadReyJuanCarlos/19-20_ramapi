@@ -15,13 +15,14 @@ REDIS_LOG_NAME = 'log_redis.log'
 
 
 class ManageRedis(QtCore.QObject):
-    def __init__(self, stop_button, start_button, redis_status, redis_handler):
+    def __init__(self, stop_button, start_button, redis_status, redis_handler,redis_port):
         super(ManageRedis, self).__init__()
         os.remove(REDIS_LOG_NAME)
         self.stop_button = stop_button
         self.start_button = start_button
         self.status_redis = redis_status
         self.redis_handler = redis_handler
+        self.redis_port = redis_port
 
         logger.add(REDIS_LOG_NAME, filter=lambda record: record["extra"]["task"] == "redis",
                    format="{level} | {message}")
@@ -37,8 +38,12 @@ class ManageRedis(QtCore.QObject):
 
     def start_redis(self):
         cmd_line_redis_starter = "redis-server"
+        if self.redis_port.toPlainText().isdigit():
+            cmd_line_redis_starter += " --port " + self.redis_port.toPlainText()
+        else:
+            self.logger_a.warning("Invalid port, It will use default port")
 
-        self.process = subprocess.Popen([cmd_line_redis_starter], stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
+        self.process = subprocess.Popen([cmd_line_redis_starter],shell=True, stdout=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
         q = Queue()
         t = Thread(target=self.enqueue_output, args=(self.process.stdout, q))
         t.daemon = True

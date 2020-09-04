@@ -8,8 +8,7 @@ class RedisHandler():
 
     def redisLocalhostLive(self):
         print(self.port.toPlainText())
-        redtest = redis.Redis(host=self.machine.toPlainText(),
-                                      port=int(self.port.toPlainText()), db=0)  # non-default ports could go here
+        redtest = redis.Redis(port=int(self.port.toPlainText()), db=0)  # non-default ports could go here
         try:
             return redtest.ping()
         except (redis.ConnectionError, ConnectionRefusedError) as e:

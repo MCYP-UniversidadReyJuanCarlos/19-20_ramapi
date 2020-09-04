@@ -302,34 +302,65 @@
        <string>REDIS</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="7">
-        <widget class="QPushButton" name="log_redis_button">
-         <property name="text">
-          <string>Logs</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QLabel" name="status_redis_title">
-         <property name="text">
-          <string>Status:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="6" colspan="2">
-        <widget class="QLabel" name="status_redis">
+       <item row="0" column="2">
+        <widget class="QLabel" name="version_of_redis_label">
          <property name="autoFillBackground">
           <bool>true</bool>
          </property>
          <property name="text">
           <string/>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QLabel" name="status_redis_title">
+         <property name="text">
+          <string>Status:</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
+       <item row="3" column="7">
+        <widget class="QPushButton" name="stop_redis_button">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="redis_port_label">
+         <property name="text">
+          <string>Redis port:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="8">
+        <widget class="QPushButton" name="log_redis_button">
+         <property name="text">
+          <string>Logs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="redis_machine_lable">
+         <property name="text">
+          <string>Machine of Redis:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -345,65 +376,27 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="version_of_redis_label">
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="6">
-        <widget class="QPushButton" name="stop_redis_button">
-         <property name="text">
-          <string>Stop</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="5">
         <widget class="QPushButton" name="start_redis_button">
          <property name="text">
           <string>Start</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="version_of_redis_title">
+       <item row="0" column="7" colspan="2">
+        <widget class="QLabel" name="status_redis">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
          <property name="text">
-          <string>Version of REDIS :</string>
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="redis_machine_lable">
-         <property name="text">
-          <string>Machine of Redis:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="redis_port_label">
-         <property name="text">
-          <string>Redis port:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
+       <item row="3" column="2">
         <widget class="QTextEdit" name="redis_port">
          <property name="maximumSize">
           <size>
@@ -419,16 +412,26 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QTextEdit" name="redis_machine">
+       <item row="0" column="0">
+        <widget class="QLabel" name="version_of_redis_title">
+         <property name="text">
+          <string>Version of REDIS :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="redis_machine">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
            <height>20</height>
           </size>
          </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
          </property>
         </widget>
        </item>
