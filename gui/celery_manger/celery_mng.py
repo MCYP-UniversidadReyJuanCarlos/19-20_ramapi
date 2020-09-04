@@ -46,13 +46,13 @@ class CeleryManager(QtCore.QObject):
             queue.put(line)
             if "info" == mode:
                 self.logger_a.info(line)
-                self.window_logger.emit(line1)
+                self.window_logger.emit(line)
             if "error" == mode:
                 self.logger_a.error(line)
-                self.window_logger.emit(line1)
-            else:
+                self.window_logger.emit(line)
+            elif "warn":
                 self.logger_a.warning(line)
-                self.window_logger.emit(line1)
+                self.window_logger.emit(line)
         out.close()
 
     def startCelery(self):

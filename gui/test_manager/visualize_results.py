@@ -5,7 +5,7 @@ from PyQt5 import QtWebEngineWidgets
 class VisualizeResults(QtWidgets.QWidget):
 
     def __init__(self):
-        super(visualize_results,self).__init__()
+        super(VisualizeResults,self).__init__()
         self.view = QtWebEngineWidgets.QWebEngineView()
         self.init_ui()
 
@@ -15,7 +15,7 @@ class VisualizeResults(QtWidgets.QWidget):
         self.setWindowTitle('Results')
 
     def load_results(self):
-        path  = os.path.split(os.path.abspath(__file__))[0]+r'/../../ log.html'
+        path  = os.path.split(os.path.abspath(__file__))[0]+r'/../../log.html'
         print(path)
         self.view.load(QtCore.QUrl().fromLocalFile(
             path
