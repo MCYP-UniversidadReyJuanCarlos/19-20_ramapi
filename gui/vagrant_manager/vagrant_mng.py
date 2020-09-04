@@ -56,10 +56,13 @@ class VagrantMng(QtCore.QObject):
         if state == QtGui.QValidator.Acceptable:
             color = '#c4df9b'  # green
             value = True
+            self.start_button.setEnabled(True)
         elif state == QtGui.QValidator.Intermediate:
             color = '#fff79a'  # yellow
+            self.start_button.setEnabled(False)
         else:
             color = '#f6989d'  # red
+            self.start_button.setEnabled(False)
         self.path.setStyleSheet('QLineEdit { background-color: %s }' % color)
         return value
 
@@ -76,6 +79,7 @@ class VagrantMng(QtCore.QObject):
     def search_vagrant_machine(self):
         filename = QFileDialog.getOpenFileName()
         self.path.setText(filename[0])
+        self.validate_input_vagrantfile()
 
     # Configuration file
     def setup_configuratio_file(self):

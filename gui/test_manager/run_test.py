@@ -63,14 +63,14 @@ class RunTest(QtCore.QObject):
                 self.status.setStyleSheet("background-color: red")
                 self.startButton.setEnabled(True)
             else:
-                print("Esta corriendo")
+                self.logger_a.warning("Can't execute the test, review the processes")
 
     def is_test_running(self):
         try:
-            print("Is thread alive " + str(self.command_runner.is_alive()))
+            self.logger_a.debug("Is thread alive " + str(self.command_runner.is_alive()))
             return self.command_runner.is_alive()
         except:
-            print("Can't get the status of the thread")
+            self.logger_a.warning("Can't get the status of the thread")
 
     def set_base_path(self, base_path):
         self.base_path = base_path
@@ -86,6 +86,6 @@ class RunTest(QtCore.QObject):
                 self.logger_a.info(line)
             if "error" == mode:
                 self.logger_a.error(line)
-            else:
+            elif "warn":
                 self.logger_a.warning(line)
         out.close()

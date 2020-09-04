@@ -15,7 +15,7 @@ ON_POSIX = 'posix' in sys.builtin_module_names
 
 class CeleryManager(QtCore.QObject):
 
-    def __init__(self, status, startButton, stopButton, window_logger):
+    def __init__(self, status, startButton, stopButton, window_logger, redis_port):
         try:
             os.remove(CELERY_LOG_NAME)
         except:
@@ -24,6 +24,7 @@ class CeleryManager(QtCore.QObject):
         self.startButton = startButton
         self.stopButton = stopButton
         self.status = status
+        self.redis_port = redis_port
         self.window_logger = window_live_logger.QTextEditLogger(window_logger)
         print("Celery " + os.getcwd())
 
@@ -46,20 +47,26 @@ class CeleryManager(QtCore.QObject):
             queue.put(line)
             if "info" == mode:
                 self.logger_a.info(line)
-                self.window_logger.emit(line1)
+                self.window_logger.emit(line)
             if "error" == mode:
                 self.logger_a.error(line)
-                self.window_logger.emit(line1)
-            else:
+                self.window_logger.emit(line)
+            elif "warn":
                 self.logger_a.warning(line)
-                self.window_logger.emit(line1)
+                self.window_logger.emit(line)
         out.close()
 
     def startCelery(self):
         if (not self.is_celery_working()):
-            print(os.listdir())
-            cmd_line_celery_starter = 'celery worker -A workers.vagranttasks -b redis://127.0.0.1/1 --loglevel=DEBUG' \
-                                      ' -n vagrant@%h --concurrency=3'
+
+            if self.redis_port.toPlainText().isdigit():
+                cmd_line_celery_starter = 'celery worker -A workers.vagranttasks -b redis://127.0.0.1:' + \
+                                          self.redis_port.toPlainText()+'/1 --loglevel=DEBUG -n vagrant@%h ' \
+                                            '--concurrency=3'
+            else:
+                cmd_line_celery_starter = 'celery worker -A workers.vagranttasks -b redis://127.0.0.1/1' + \
+                                          ' --loglevel=DEBUG -n vagrant@%h --concurrency=3'
+
             self.process = subprocess.Popen(cmd_line_celery_starter, shell=True, stdout=subprocess.PIPE,
                                             stderr=subprocess.PIPE, bufsize=1, close_fds=ON_POSIX)
 

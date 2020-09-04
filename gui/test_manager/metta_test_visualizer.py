@@ -39,7 +39,7 @@ class MettaTestVisualizer(QtCore.QObject):
 
         filePath = self.tree.model.filePath(indexItem)
 
-        run_test.run_test.test_selected(self.test_runner,filePath)
+        run_test.RunTest.test_selected(self.test_runner,filePath)
         self.complete_file_path = filePath
 
     def getModel(self):
