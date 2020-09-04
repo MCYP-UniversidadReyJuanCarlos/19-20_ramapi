@@ -4,9 +4,38 @@ Repositorio: ramapi-1920
 ---
 Objetivos del TFM:
 --- 
- - Mejorar la usabilidad de la herramienta Metta ( ya que en trabajos anteriores se vió que los primeros pasos, como la utilización de esta, requería de una infraestructura compleja)
+ - Facilitar la configuración y despliegue de la herramienta. 
+ - Mejorar la gestion de los distintos procesos de la herramienta Metta ( ya que en trabajos anteriores se vió que los primeros pasos, como la utilización de esta, requería de una infraestructura compleja)
+ - Mejorar la gestión de los logs de la herramienta. 
  - Facilitar el acceso a los reportes generados por esta. 
 
+
+---
+Como ejecutar la aplicación 
+---
+En este, se necesitará tener instalado en la misma máquina Python en su versión 2 para la ejecución de Metta, y Python en su versión 3 para la ejecución de la interfaz.
+
+Una vez descargado el repositorio, para ejecutar la aplicación hay que ir al directorio gui. Una vez allí se ejecuta la siguiente linea en la terminal 
+```
+python main.py
+```
+En el caso de tener varias versiones de python instaladas se usará el alias de la versión de python 3 para la ejecución de la herramienta.
+Por ejemplo
+```
+python3 main.py
+```
+Así ya se levantaría la aplicación y se podría comenzar a usar.
+
+---
+Set up de desarrollo
+---
+
+Para implementar o modificar el comportamiento de la herramienta es recomendable utilizar un editor de Python, cargando la carpeta 
+"gui" en el IDE. 
+
+Y para la edición de la interfaz se recomienda la herramienta Qt Creator (https://www.qt.io/product/development-tools)
+
+Eso sería todo lo necesario para continuar con el desarrollo.
 
 # Metta 
 
