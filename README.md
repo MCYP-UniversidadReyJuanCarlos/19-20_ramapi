@@ -13,7 +13,7 @@ Objetivos del TFM:
 ---
 Como ejecutar la aplicación 
 ---
-En este, se necesitará tener instalado en la misma máquina Python en su versión 2 para la ejecución de Metta, y Python en su versión 3 para la ejecución de la interfaz.
+Se necesitará tener instalado en la misma máquina Python en su versión 2 para la ejecución de Metta, y Python en su versión 3 para la ejecución de la interfaz.
 
 Una vez descargado el repositorio, para ejecutar la aplicación hay que ir al directorio gui. Una vez allí se ejecuta la siguiente linea en la terminal 
 ```
@@ -25,6 +25,7 @@ Por ejemplo
 python3 main.py
 ```
 Así ya se levantaría la aplicación y se podría comenzar a usar.
+Si no se tiene alguna de las herramientas instaladas, se habilitarán los botones que muestran la información necesaria para instalarlas. Si eso no fuera suficiente se puede recurrir a la información original del repositorio Metta, o a su wiki.
 
 ---
 Set up de desarrollo
@@ -33,9 +34,9 @@ Set up de desarrollo
 Para implementar o modificar el comportamiento de la herramienta es recomendable utilizar un editor de Python, cargando la carpeta 
 "gui" en el IDE. 
 
-Y para la edición de la interfaz se recomienda la herramienta Qt Creator (https://www.qt.io/product/development-tools)
+Y para la edición de la interfaz (fichero main_gui.ui)se recomienda la herramienta Qt Creator (https://www.qt.io/product/development-tools)
 
-Eso sería todo lo necesario para continuar con el desarrollo.
+Eso sería todo lo necesario para continuar con el desarrollo de la herramienta
 
 # Metta 
 
