@@ -25,7 +25,7 @@ Por ejemplo
 python3 main.py
 ```
 Así ya se levantaría la aplicación y se podría comenzar a usar.
-Si no se tiene alguna de las herramientas instaladas, se habilitarán los botones que muestran la información necesaria para instalarlas. Si eso no fuera suficiente se puede recurrir a la información original del repositorio Metta, o a su wiki.
+Si no se tiene alguna de las herramientas instaladas, se habilitarán los botones que muestran la información necesaria para instalarlas. Si eso no fuera suficiente se puede recurrir a la información original del repositorio Metta que se puede observar a continuación en este mismo README, o a su wiki.
 
 ---
 Set up de desarrollo
